@@ -7,10 +7,12 @@ namespace EvilCorp.Models;
 public class Company
 {
     [MaxLength(300)]
-    public string Name { get; set; }
+    [Required]
+    public string Name { get; set; } = null!;
     
     [MaxLength(10)]
-    public string Krs { get; set; }
+    [Required]
+    public string Krs { get; set; } = null!;
     
     // foreign key property
     public int ClientId { get; set; }

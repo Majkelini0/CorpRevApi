@@ -28,4 +28,7 @@ public class Client
     
     // reference navigation to dependent entity
     public Company? Company { get; set; }
+    
+    // 
+    public List<SingleSale> SingleSales { get; set; } = new();
 }

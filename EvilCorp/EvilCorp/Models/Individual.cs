@@ -7,12 +7,15 @@ namespace EvilCorp.Models;
 public class Individual
 {
     [MaxLength(200)]
+    [Required]
     public string FName { get; set; } = null!;
-    
+
     [MaxLength(200)]
+    [Required]
     public string LName { get; set; } = null!;
     
     [MaxLength(11)]
+    [Required]
     public string Pesel { get; set; } = null!;
     
     // foreign key property
