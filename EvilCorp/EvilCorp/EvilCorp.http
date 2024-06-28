@@ -1,0 +1,6 @@
+@EvilCorp_HostAddress = http://localhost:5555
+
+GET {{EvilCorp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
