@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using EvilCorp.Models;
+﻿using EvilCorp.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EvilCorp.Context;
@@ -17,6 +15,12 @@ public partial class EvilCorpContext : DbContext
     }
     
     public DbSet<User> User { get; set; }
+    
+    public DbSet<Individual> Individual { get; set; }
+    
+    public DbSet<Company> Company { get; set; }
+    
+    public DbSet<Client> Client { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
