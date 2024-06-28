@@ -26,6 +26,8 @@ public partial class EvilCorpContext : DbContext
     
     public DbSet<Software> Software { get; set; }
     
+    public DbSet<Payment> Payment { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         OnModelCreatingPartial(modelBuilder);

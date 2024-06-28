@@ -36,4 +36,7 @@ public class SingleSale
     
     public Software Software { get; set; } = null!;
     public int SoftwareId { get; set; }
+    
+    //
+    public List<Payment> Payments { get; set; } = null!;
 }
