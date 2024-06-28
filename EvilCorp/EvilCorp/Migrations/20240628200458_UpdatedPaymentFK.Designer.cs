@@ -4,6 +4,7 @@ using EvilCorp.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvilCorp.Migrations
 {
     [DbContext(typeof(EvilCorpContext))]
-    partial class EvilCorpContextModelSnapshot : ModelSnapshot
+    [Migration("20240628200458_UpdatedPaymentFK")]
+    partial class UpdatedPaymentFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace EvilCorp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("AvailableDiscounts", b =>
-                {
-                    b.Property<int>("DiscountsIdDiscount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SoftwaresIdSoftware")
-                        .HasColumnType("int");
-
-                    b.HasKey("DiscountsIdDiscount", "SoftwaresIdSoftware");
-
-                    b.HasIndex("SoftwaresIdSoftware");
-
-                    b.ToTable("AvailableDiscounts");
-                });
 
             modelBuilder.Entity("EvilCorp.Models.Client", b =>
                 {
@@ -93,39 +81,6 @@ namespace EvilCorp.Migrations
                     b.HasKey("ClientId");
 
                     b.ToTable("Company");
-                });
-
-            modelBuilder.Entity("EvilCorp.Models.Discount", b =>
-                {
-                    b.Property<int>("IdDiscount")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDiscount"));
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Info")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Value")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("decimal(5,2)");
-
-                    b.HasKey("IdDiscount");
-
-                    b.ToTable("Discount");
                 });
 
             modelBuilder.Entity("EvilCorp.Models.Individual", b =>
@@ -296,21 +251,6 @@ namespace EvilCorp.Migrations
                     b.HasKey("IdUser");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("AvailableDiscounts", b =>
-                {
-                    b.HasOne("EvilCorp.Models.Discount", null)
-                        .WithMany()
-                        .HasForeignKey("DiscountsIdDiscount")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EvilCorp.Models.Software", null)
-                        .WithMany()
-                        .HasForeignKey("SoftwaresIdSoftware")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("EvilCorp.Models.Company", b =>

@@ -38,5 +38,5 @@ public class SingleSale
     public int SoftwareId { get; set; }
     
     //
-    public List<Payment> Payments { get; set; } = null!;
+    public List<Payment> Payments { get; set; } = new List<Payment>();
 }

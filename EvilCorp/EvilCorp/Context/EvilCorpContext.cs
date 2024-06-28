@@ -1,4 +1,5 @@
-﻿using EvilCorp.Models;
+﻿using EvilCorp.Migrations;
+using EvilCorp.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EvilCorp.Context;
@@ -28,9 +29,18 @@ public partial class EvilCorpContext : DbContext
     
     public DbSet<Payment> Payment { get; set; }
     
+    public DbSet<Discount> Discount { get; set; }
+    
+    //public DbSet<AvailableDiscounts> AvailableDiscounts { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         OnModelCreatingPartial(modelBuilder);
+
+        modelBuilder.Entity<Software>()
+            .HasMany(e => e.Discounts)
+            .WithMany(e => e.Softwares)
+            .UsingEntity("AvailableDiscounts");
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
