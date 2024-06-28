@@ -1,5 +1,7 @@
 using System.Text;
+using EvilCorp.Context;
 using EvilCorp.Middlewares;
+using EvilCorp.Services.Login;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -7,8 +9,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// // // SECURITY SECURITY SECURITY SECURITY SECURITY SECURITY SECURITY SECURITY SECURITY SECURITY // // //
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -39,11 +40,17 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+// // // SECURITY SECURITY SECURITY SECURITY SECURITY SECURITY SECURITY SECURITY SECURITY SECURITY // // //
+
 
 builder.Services.AddControllers();
 
-// builder.Services.AddDbContext<ProjectContext>(options =>
-//     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddScoped<ILoginService, LoginService>();
+
+
+
+builder.Services.AddDbContext<EvilCorpContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 
 // // // AUTHENTICATION AUTHENTICATION AUTHENTICATION AUTHENTICATION AUTHENTICATION AUTHENTICATION // // //
@@ -96,8 +103,6 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -108,5 +113,7 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.MapControllers();
+//app.UseAuthentication();
+//app.UseAuthorization();
 
 app.Run("http://localhost:5555");
