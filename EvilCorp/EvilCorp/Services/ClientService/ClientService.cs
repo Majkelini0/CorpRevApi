@@ -106,4 +106,60 @@ public class ClientService : IClientService
 
         return true;
     }
+
+    public async Task<bool> DoesCompanyExistsAsync(int id)
+    {
+        return await _context.Company.FirstOrDefaultAsync(e => e.ClientId == id) == null;
+    }
+
+    public async Task<bool> UpdateIndividualAsync(UpdateIndividualDto request, int id)
+    {
+        var client = await _context.Client.FirstOrDefaultAsync(e => e.IdClient == id);
+        if (client == null)
+        {
+            return false;
+        }
+
+        client.Address = request.Address;
+        client.PhoneNum = request.PhoneNum;
+        client.Email = request.Email;
+
+        var individual = await _context.Individual.FirstOrDefaultAsync(e => e.ClientId == id);
+        if (individual == null)
+        {
+            return false;
+        }
+
+        individual.FName = request.FName;
+        individual.LName = request.LName;
+
+        await _context.SaveChangesAsync();
+        
+        return true;
+    }
+
+    public async Task<bool> UpdateCompanyAsync(UpdateCompanyDto request, int id)
+    {
+        var client = await _context.Client.FirstOrDefaultAsync(e => e.IdClient == id);
+        if (client == null)
+        {
+            return false;
+        }
+
+        client.Address = request.Address;
+        client.PhoneNum = request.PhoneNum;
+        client.Email = request.Email;
+
+        var company = await _context.Company.FirstOrDefaultAsync(e => e.ClientId == id);
+        if (company == null)
+        {
+            return false;
+        }
+
+        company.Name = request.Name;
+
+        await _context.SaveChangesAsync();
+        
+        return true;
+    }
 }

@@ -57,7 +57,7 @@ public class ClientsController : ControllerBase
         return Ok("Company created");
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("DeleteClient/{id:int}")]
     public async Task<IActionResult> DeleteIndividual(int id)
     {
         if (await _service.DoesIndividualExistsAsync(id))
@@ -73,10 +73,35 @@ public class ClientsController : ControllerBase
         return Ok("Individual deleted");
     }
 
-    // public async Task<IActionResult> UpdateIndividual()
-    // {
-    //     
-    //     
-    //     return Ok("Individual updated");
-    // }
+    [HttpPut("UpdateIndividual/{id:int}")]
+    public async Task<IActionResult> UpdateIndividual([FromBody] UpdateIndividualDto request, int id)
+    {
+        if (await _service.DoesIndividualExistsAsync(id))
+        {
+            return BadRequest("Person with this ID doesn't exist in the database");
+        }
+
+        if (await _service.UpdateIndividualAsync(request, id) == false)
+        {
+            return NotFound("Sth went wrong. Person could not be found");
+        }
+        
+        return Ok("Individual updated");
+    }
+    
+    [HttpPut("UpdateCompany/{id:int}")]
+    public async Task<IActionResult> UpdateCompany([FromBody] UpdateCompanyDto request, int id)
+    {
+        if (await _service.DoesCompanyExistsAsync(id))
+        {
+            return BadRequest("Company with this ID doesn't exist in the database");
+        }
+        
+        if (await _service.UpdateCompanyAsync(request, id) == false)
+        {
+            return NotFound("Sth went wrong. Company could not be found");
+        }
+        
+        return Ok("Company updated");
+    }
 }

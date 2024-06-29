@@ -15,4 +15,10 @@ public interface IClientService
     public Task<bool> DoesIndividualExistsAsync(int id);
 
     public Task<bool> DeleteIndividualAsync(int id);
+
+    public Task<bool> DoesCompanyExistsAsync(int id);
+
+    public Task<bool> UpdateIndividualAsync(UpdateIndividualDto request, int id);
+
+    public Task<bool> UpdateCompanyAsync(UpdateCompanyDto request, int id);
 }

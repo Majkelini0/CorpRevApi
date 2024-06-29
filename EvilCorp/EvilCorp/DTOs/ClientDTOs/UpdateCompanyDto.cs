@@ -2,13 +2,10 @@
 
 namespace EvilCorp.DTOs.ClientDTOs;
 
-public class NewCompanyDto
+public class UpdateCompanyDto
 {
     [Required]
     public string Name { get; set; } = null!;
-    
-    [Required]
-    public string Krs { get; set; } = null!;
     
     public string Address { get; set; } = null!;
     
