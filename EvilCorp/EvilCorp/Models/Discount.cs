@@ -24,6 +24,6 @@ public class Discount
     public DateTime EndDate { get; set; }
     
     //
-    public List<Software> Softwares { get; set; } = new List<Software>();
-    //public List<AvailableDiscounts> AvailableDiscounts { get; set; } = new List<AvailableDiscounts>();
+    //public List<Software> Softwares { get; set; } = new List<Software>();
+    public List<AvailableDiscount> AvailableDiscounts { get; set; } = new List<AvailableDiscount>();
 }

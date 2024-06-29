@@ -29,40 +29,40 @@ namespace EvilCorp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AvailableDiscounts",
+                name: "AvailableDiscount",
                 columns: table => new
                 {
-                    DiscountsIdDiscount = table.Column<int>(type: "int", nullable: false),
-                    SoftwaresIdSoftware = table.Column<int>(type: "int", nullable: false)
+                    SoftwareId = table.Column<int>(type: "int", nullable: false),
+                    DiscountId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AvailableDiscounts", x => new { x.DiscountsIdDiscount, x.SoftwaresIdSoftware });
+                    table.PrimaryKey("PK_AvailableDiscount", x => new { x.SoftwareId, x.DiscountId });
                     table.ForeignKey(
-                        name: "FK_AvailableDiscounts_Discount_DiscountsIdDiscount",
-                        column: x => x.DiscountsIdDiscount,
+                        name: "FK_AvailableDiscount_Discount_DiscountId",
+                        column: x => x.DiscountId,
                         principalTable: "Discount",
                         principalColumn: "IdDiscount",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AvailableDiscounts_Software_SoftwaresIdSoftware",
-                        column: x => x.SoftwaresIdSoftware,
+                        name: "FK_AvailableDiscount_Software_SoftwareId",
+                        column: x => x.SoftwareId,
                         principalTable: "Software",
                         principalColumn: "IdSoftware",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AvailableDiscounts_SoftwaresIdSoftware",
-                table: "AvailableDiscounts",
-                column: "SoftwaresIdSoftware");
+                name: "IX_AvailableDiscount_DiscountId",
+                table: "AvailableDiscount",
+                column: "DiscountId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AvailableDiscounts");
+                name: "AvailableDiscount");
 
             migrationBuilder.DropTable(
                 name: "Discount");

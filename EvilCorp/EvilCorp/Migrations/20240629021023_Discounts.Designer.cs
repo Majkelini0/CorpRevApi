@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvilCorp.Migrations
 {
     [DbContext(typeof(EvilCorpContext))]
-    [Migration("20240628204304_Discounts")]
+    [Migration("20240629021023_Discounts")]
     partial class Discounts
     {
         /// <inheritdoc />
@@ -25,19 +25,19 @@ namespace EvilCorp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AvailableDiscounts", b =>
+            modelBuilder.Entity("EvilCorp.Models.AvailableDiscount", b =>
                 {
-                    b.Property<int>("DiscountsIdDiscount")
+                    b.Property<int>("SoftwareId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SoftwaresIdSoftware")
+                    b.Property<int>("DiscountId")
                         .HasColumnType("int");
 
-                    b.HasKey("DiscountsIdDiscount", "SoftwaresIdSoftware");
+                    b.HasKey("SoftwareId", "DiscountId");
 
-                    b.HasIndex("SoftwaresIdSoftware");
+                    b.HasIndex("DiscountId");
 
-                    b.ToTable("AvailableDiscounts");
+                    b.ToTable("AvailableDiscount");
                 });
 
             modelBuilder.Entity("EvilCorp.Models.Client", b =>
@@ -301,19 +301,23 @@ namespace EvilCorp.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("AvailableDiscounts", b =>
+            modelBuilder.Entity("EvilCorp.Models.AvailableDiscount", b =>
                 {
-                    b.HasOne("EvilCorp.Models.Discount", null)
-                        .WithMany()
-                        .HasForeignKey("DiscountsIdDiscount")
+                    b.HasOne("EvilCorp.Models.Discount", "Discount")
+                        .WithMany("AvailableDiscounts")
+                        .HasForeignKey("DiscountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EvilCorp.Models.Software", null)
-                        .WithMany()
-                        .HasForeignKey("SoftwaresIdSoftware")
+                    b.HasOne("EvilCorp.Models.Software", "Software")
+                        .WithMany("AvailableDiscounts")
+                        .HasForeignKey("SoftwareId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Discount");
+
+                    b.Navigation("Software");
                 });
 
             modelBuilder.Entity("EvilCorp.Models.Company", b =>
@@ -377,6 +381,11 @@ namespace EvilCorp.Migrations
                     b.Navigation("SingleSales");
                 });
 
+            modelBuilder.Entity("EvilCorp.Models.Discount", b =>
+                {
+                    b.Navigation("AvailableDiscounts");
+                });
+
             modelBuilder.Entity("EvilCorp.Models.SingleSale", b =>
                 {
                     b.Navigation("Payments");
@@ -384,6 +393,8 @@ namespace EvilCorp.Migrations
 
             modelBuilder.Entity("EvilCorp.Models.Software", b =>
                 {
+                    b.Navigation("AvailableDiscounts");
+
                     b.Navigation("SingleSales");
                 });
 #pragma warning restore 612, 618
