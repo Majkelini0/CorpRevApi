@@ -1,4 +1,5 @@
 ﻿using EvilCorp.Context;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EvilCorp.Services.IncomeService;
@@ -29,7 +30,7 @@ public class IncomeService : IIncomeService
             .SumAsync(x => x.Price);
         
         sum += await _context.SingleSale
-            .Where(e => e.ExpiresAt != null && e.ExpiresAt.Year == year)
+            .Where(e => e.ExpiresAt.Year == year && e.IsPaid == "N")
             .SumAsync(x => x.Price * 0.66m);
 
         return sum;
