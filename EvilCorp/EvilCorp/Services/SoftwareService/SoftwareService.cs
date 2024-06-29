@@ -25,32 +25,30 @@ public class SoftwareService : ISoftwareService
         {
             throw new ArgumentException("Software with given id does not exist");
         }
-        decimal softPrice = soft.Price;
-        Console.WriteLine("// // // Software price: " + softPrice);
+        double softPrice = Decimal.ToDouble(soft.Price);
         
-        decimal additionalCosts = 1000 * request.SupportPeriod - 1000;
+        double additionalCosts = (1000 * request.SupportPeriod) - 1000;
 
-        decimal prevClientDiscount = 0;
+        double prevClientDiscount = 0;
         if (isPrev)
         {
-            prevClientDiscount = (decimal)0.05;
+            prevClientDiscount = 0.05;
         }
         
         Console.WriteLine("// // // Prev client discount: " + prevClientDiscount);
         
-        // check any discounts
-        decimal maxDiscount = 0;
+        double maxDiscount = 0;
         maxDiscount = FindMaxDiscount(request.SoftwareId);
 
-        decimal totalPrice = 0;
+        double totalPrice = 0;
         totalPrice += (additionalCosts + softPrice * (1 - prevClientDiscount - maxDiscount));
 
-        return totalPrice;
+        return Convert.ToDecimal(totalPrice);
     }
 
-    private decimal FindMaxDiscount(int SoftwareId)
+    private double FindMaxDiscount(int SoftwareId)
     {
-        decimal maxDiscount = 0;
+        double maxDiscount = 0;
 
         var discounts = _context.AvailableDiscount
             .Include(x => x.Discount);
@@ -67,11 +65,12 @@ public class SoftwareService : ISoftwareService
                 continue;
             }
             
-            if (discount.Discount.Value > maxDiscount)
+            if (Decimal.ToDouble(discount.Discount.Value) > maxDiscount)
             {
-                maxDiscount = discount.Discount.Value;
+                maxDiscount = Decimal.ToDouble(discount.Discount.Value);
             }
         }
+        maxDiscount = maxDiscount / 100;
         
         Console.WriteLine("// // // Max discount: " + maxDiscount); //////////////////////////////////////////////////
 
