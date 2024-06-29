@@ -33,7 +33,7 @@ public class PaymentService : IPaymentService
         return true;
     }
 
-    public async Task<bool> UpdateIfPaidParamAsync(NewPaymentDto request ,decimal allPaymentsSum)
+    public async Task<bool> UpdateIsPaidParamAsync(NewPaymentDto request ,decimal allPaymentsSum)
     {
         var sale = await _context.SingleSale
             .Where(e => e.IdSale == request.SingleSaleId).FirstOrDefaultAsync();
@@ -48,6 +48,7 @@ public class PaymentService : IPaymentService
         if (allPaymentsSum + request.Amount >= price)
         {
             sale.IsPaid = "Y";
+            sale.FulfilledAt = DateTime.Now;
             
             var client = await _context.Client
                 .Where(e => e.IdClient == sale.ClientId)
@@ -61,6 +62,15 @@ public class PaymentService : IPaymentService
             client.PrevClient = "Y";
         }
         
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> RollBackPaymentsAsync(int id)
+    {
+        await _context.Payment.Where(e => e.SingleSaleId == id).ForEachAsync(e => _context.Payment.Remove(e));
+
         await _context.SaveChangesAsync();
 
         return true;

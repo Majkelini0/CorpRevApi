@@ -34,7 +34,7 @@ public class SaleService : ISaleService
         return true;
     }
 
-    public async Task<SingleSale> NewSaleAsync(NewSaleDto request, decimal totalPrice)
+    public async Task<SingleSale> PrepareNewSale(NewSaleDto request, decimal totalPrice)
     {
         SingleSale deal = new SingleSale()
         {
@@ -69,5 +69,30 @@ public class SaleService : ISaleService
         }
 
         return false;
+    }
+    
+    public async Task<bool> IsSaleStillValidAsync(int id)
+    {
+        var sale = await _context.SingleSale
+            .Where(e => e.IdSale == id)
+            .FirstOrDefaultAsync();
+        
+        if(sale.ExpiresAt < DateTime.Now)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public async Task<bool> DeleteSaleAsync(int id)
+    {
+        await _context.SingleSale.Where(e => e.IdSale == id).ForEachAsync(e => _context.SingleSale.Remove(e));
+
+        // _context.SingleSale.Where(e => e.IdSale == id).Select(e => _context.SingleSale.Remove(e));
+        
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 }

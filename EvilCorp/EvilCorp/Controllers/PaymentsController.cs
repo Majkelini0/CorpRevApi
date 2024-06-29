@@ -11,13 +11,13 @@ public class PaymentsController : ControllerBase
 {
     private readonly IPaymentService _paymentService;
     private readonly ISaleService _saleService;
-    
+
     public PaymentsController(IPaymentService paymentService, ISaleService saleService)
     {
         _paymentService = paymentService;
         _saleService = saleService;
     }
-    
+
     [HttpPost("NewPayment")]
     public async Task<IActionResult> MakeNewPaymentAsync([FromBody] NewPaymentDto request)
     {
@@ -31,18 +31,29 @@ public class PaymentsController : ControllerBase
             return BadRequest("Sale with this ID is already paid");
         }
 
-        var allPaymentsSum = await _paymentService.SumUpAllPaymentsAsync(request.SingleSaleId);
+
+        if (await _saleService.IsSaleStillValidAsync(request.SingleSaleId))
+        {
+            var allPaymentsSum = await _paymentService.SumUpAllPaymentsAsync(request.SingleSaleId);
+
+            if (await _paymentService.MakeNewPaymentTransactionAsync(request) == false)
+            {
+                return BadRequest("Payment failed");
+            }
+
+            if (await _paymentService.UpdateIsPaidParamAsync(request, allPaymentsSum) == false)
+            {
+                return BadRequest("Payment failed");
+            }
+
+            return Ok("Payment created");
+        } // 'else'
         
-        if(await _paymentService.MakeNewPaymentTransactionAsync(request) == false)
-        {
-            return BadRequest("Payment failed");
-        }
+        await _paymentService.RollBackPaymentsAsync(request.SingleSaleId);
 
-        if(await _paymentService.UpdateIfPaidParamAsync(request, allPaymentsSum) == false)
-        {
-            return BadRequest("Payment failed");
-        }
+        await _saleService.DeleteSaleAsync(request.SingleSaleId);
 
-        return Ok("Payment created");
+
+        return Ok("Payment was cancelled due to exceeding the deadline. All payments were rolled back. Sale was deleted");
     }
 }
