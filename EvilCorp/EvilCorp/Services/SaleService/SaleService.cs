@@ -1,6 +1,7 @@
 ﻿using EvilCorp.Context;
 using EvilCorp.DTOs.DealDTOs;
 using EvilCorp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EvilCorp.Services.DealService;
 
@@ -52,5 +53,21 @@ public class SaleService : ISaleService
         await _context.SaveChangesAsync();
 
         return deal;
+    }
+
+    public async Task<bool> DoesSaleExistsAsync(int saleId)
+    {
+        return await _context.SingleSale.FirstOrDefaultAsync(e => e.IdSale == saleId) != null;
+    }
+
+    public async Task<bool> IsSaleAlreadyPaidAsync(int saleId)
+    {
+        var sale = await _context.SingleSale.FirstOrDefaultAsync(e => e.IdSale == saleId);
+        if (sale.IsPaid == "Y")
+        {
+            return true;
+        }
+
+        return false;
     }
 }

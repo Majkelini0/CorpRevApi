@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EvilCorp.Controllers;
 
 [ApiController]
-[Route("EvilCorp")]
+[Route("EvilCorp/[controller]")]
 public class SalesController : ControllerBase
 {
     private readonly ISaleService _saleService;
@@ -23,7 +23,7 @@ public class SalesController : ControllerBase
     }
 
     [HttpPost("NewSale")]
-    public async Task<IActionResult> NewSaleAsync([FromBody] NewSaleDto request)
+    public async Task<IActionResult> MakeNewSaleAsync([FromBody] NewSaleDto request)
     {
         if (await _clientService.DoesClientExistsAsync(request.ClientId) == false)
         {
