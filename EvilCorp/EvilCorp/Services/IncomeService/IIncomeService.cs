@@ -2,5 +2,7 @@
 
 public interface IIncomeService
 {
-    public Task<decimal> CalculateCompanyIncomeByYearAsync(int year);
+    public Task<decimal> CalculateCurrentCompanyIncomeByYearAsync(int year);
+    
+    public Task<decimal> CalculatePrognosedCompanyIncomeByYearAsync(int year);
 }

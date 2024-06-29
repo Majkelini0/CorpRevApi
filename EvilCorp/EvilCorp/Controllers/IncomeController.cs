@@ -17,12 +17,19 @@ public class IncomeController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet("Year/{year:int}")]
-    public async Task<IActionResult> CalculateCompanyIncomeByYearAsync(int year)
+    public async Task<IActionResult> CalculateCurrentCompanyIncomeByYearAsync(int year)
     {
-        var income = await _incomeService.CalculateCompanyIncomeByYearAsync(year);
+        var income = await _incomeService.CalculateCurrentCompanyIncomeByYearAsync(year);
 
         return Ok("Company income for year " + year + " is: " + income + " PLN");
     }
-    
-    
+
+    [AllowAnonymous]
+    [HttpGet("Prognosed/Year/{year:int}")]
+    public async Task<IActionResult> CalculatePrognosedCompanyIncomeByYearAsync(int year)
+    {
+        var income = await _incomeService.CalculatePrognosedCompanyIncomeByYearAsync(year);
+        
+        return Ok("Prognosed company income for year " + year + " is: " + income + " PLN");
+    }
 }
