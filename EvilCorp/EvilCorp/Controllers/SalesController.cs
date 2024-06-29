@@ -49,7 +49,7 @@ public class SalesController : ControllerBase
 
         decimal totalPrice = await _softwareService.CalculatePriceAsync(request, isPrev);
         
-        var sale = await _saleService.NewSaleAsync(request, totalPrice);
+        var sale = await _saleService.PrepareNewSale(request, totalPrice);
         
         return Ok("Sale created");
     }
