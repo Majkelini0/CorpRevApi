@@ -41,4 +41,13 @@ public class IncomeController : ControllerBase
 
         return Ok("Company income for year " + year + " for product " + name + " is: " + income + " PLN");
     }
+    
+    [AllowAnonymous]
+    [HttpGet("Prognosed/Year/{year:int}/Product/{name}")]
+    public async Task<IActionResult> CalculatePrognosedCompanyIncomeByYearByProductAsync(int year, string name)
+    {
+        var income = await _incomeService.CalculatePrognosedCompanyIncomeByYearByProductAsync(year, name);
+
+        return Ok("Prognosed company income for year " + year + " for product " + name + " is: " + income + " PLN");
+    }
 }
