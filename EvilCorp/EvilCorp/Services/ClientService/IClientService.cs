@@ -21,4 +21,8 @@ public interface IClientService
     public Task<bool> UpdateIndividualAsync(UpdateIndividualDto request, int id);
 
     public Task<bool> UpdateCompanyAsync(UpdateCompanyDto request, int id);
+    
+    public Task<bool> DoesClientExistsAsync(int id);
+    
+    public Task<bool> IsPrevClientAsync(int id);
 }

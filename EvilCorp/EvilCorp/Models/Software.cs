@@ -35,6 +35,5 @@ public class Software
     public List<SingleSale> SingleSales { get; set; } = new();
     
     //
-    //public List<Discount> Discounts { get; set; } = new List<Discount>();
     public List<AvailableDiscount> AvailableDiscounts { get; set; } = new List<AvailableDiscount>();
 }

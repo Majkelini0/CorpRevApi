@@ -162,4 +162,14 @@ public class ClientService : IClientService
         
         return true;
     }
+
+    public async Task<bool> DoesClientExistsAsync(int id)
+    {
+        return await _context.Client.FirstOrDefaultAsync(e => e.IdClient == id) != null;
+    }
+
+    public async Task<bool> IsPrevClientAsync(int id)
+    {
+        return await _context.Client.FirstOrDefaultAsync(e => e.IdClient == id && e.PrevClient == "Y") != null;
+    }
 }

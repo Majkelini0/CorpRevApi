@@ -58,7 +58,7 @@ public class ClientsController : ControllerBase
     }
 
     [HttpDelete("DeleteClient/{id:int}")]
-    public async Task<IActionResult> DeleteIndividual(int id)
+    public async Task<IActionResult> DeleteIndividualAsync(int id)
     {
         if (await _service.DoesIndividualExistsAsync(id))
         {
@@ -74,7 +74,7 @@ public class ClientsController : ControllerBase
     }
 
     [HttpPut("UpdateIndividual/{id:int}")]
-    public async Task<IActionResult> UpdateIndividual([FromBody] UpdateIndividualDto request, int id)
+    public async Task<IActionResult> UpdateIndividualAsync([FromBody] UpdateIndividualDto request, int id)
     {
         if (await _service.DoesIndividualExistsAsync(id))
         {
@@ -90,7 +90,7 @@ public class ClientsController : ControllerBase
     }
     
     [HttpPut("UpdateCompany/{id:int}")]
-    public async Task<IActionResult> UpdateCompany([FromBody] UpdateCompanyDto request, int id)
+    public async Task<IActionResult> UpdateCompanyAsync([FromBody] UpdateCompanyDto request, int id)
     {
         if (await _service.DoesCompanyExistsAsync(id))
         {

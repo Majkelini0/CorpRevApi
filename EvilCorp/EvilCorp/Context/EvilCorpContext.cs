@@ -36,11 +36,6 @@ public partial class EvilCorpContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         OnModelCreatingPartial(modelBuilder);
-
-        // modelBuilder.Entity<Software>()
-        //     .HasMany(e => e.Discounts)
-        //     .WithMany(e => e.Softwares)
-        //     .UsingEntity("AvailableDiscounts");
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

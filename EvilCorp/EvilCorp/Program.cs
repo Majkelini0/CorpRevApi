@@ -2,7 +2,9 @@ using System.Text;
 using EvilCorp.Context;
 using EvilCorp.Middlewares;
 using EvilCorp.Services.ClientService;
+using EvilCorp.Services.DealService;
 using EvilCorp.Services.Login;
+using EvilCorp.Services.SoftwareService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -48,6 +50,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IDealService, DealService>();
+builder.Services.AddScoped<ISoftwareService, SoftwareService>();
 
 
 

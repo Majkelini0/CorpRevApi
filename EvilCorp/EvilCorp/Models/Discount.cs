@@ -17,13 +17,12 @@ public class Discount
     public string Info { get; set; } = null!;
     
     [Precision(5,2)]
-    public decimal Value { get; set; }
+    public decimal Value { get; set; } // In percent %
     
     public DateTime StartDate { get; set; }
     
     public DateTime EndDate { get; set; }
     
     //
-    //public List<Software> Softwares { get; set; } = new List<Software>();
     public List<AvailableDiscount> AvailableDiscounts { get; set; } = new List<AvailableDiscount>();
 }
