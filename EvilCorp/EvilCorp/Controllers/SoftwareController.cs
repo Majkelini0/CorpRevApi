@@ -5,11 +5,11 @@ namespace EvilCorp.Controllers;
 
 public class SoftwareController : ControllerBase
 {
-    private readonly ISoftwareService _service;
+    private readonly ISoftwareService _softwareService;
     
-    public SoftwareController(ISoftwareService service)
+    public SoftwareController(ISoftwareService softwareService)
     {
-        _service = service;
+        _softwareService = softwareService;
     }
     
     

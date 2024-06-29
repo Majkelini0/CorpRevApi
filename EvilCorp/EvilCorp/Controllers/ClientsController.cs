@@ -9,11 +9,11 @@ namespace EvilCorp.Controllers;
 [Route("EvilCorp/[controller]")]
 public class ClientsController : ControllerBase
 {
-    private readonly IClientService _service;
+    private readonly IClientService _clientService;
     
-    public ClientsController(IClientService service)
+    public ClientsController(IClientService clientService)
     {
-        _service = service;
+        _clientService = clientService;
     }
     
     [AllowAnonymous]
@@ -25,12 +25,12 @@ public class ClientsController : ControllerBase
             return BadRequest("PESEL doesn't have 11 characters or contains non digit characters");
         }
         
-        if (await _service.DoesIndividualExistsAsync(request.Pesel))
+        if (await _clientService.DoesIndividualExistsAsync(request.Pesel))
         {
             return BadRequest("Person with this PESEL already exists in the database");
         }
 
-        if (await _service.AddClientAsync(request) == false)
+        if (await _clientService.AddClientAsync(request) == false)
         {
             return BadRequest("Something went wrong while adding the individual to the database");
         }
@@ -47,12 +47,12 @@ public class ClientsController : ControllerBase
             return BadRequest("KRS number doesn't have 10 characters or contains non digit characters");
         }
         
-        if (await _service.DoesCompanyExistsAsync(request.Krs))
+        if (await _clientService.DoesCompanyExistsAsync(request.Krs))
         {
             return BadRequest("Company with this KRS number already exists in the database");
         }
 
-        if (await _service.AddCompanyAsync(request) == false)
+        if (await _clientService.AddCompanyAsync(request) == false)
         {
             return BadRequest("Something went wrong while adding the Company to the database");
         }
@@ -64,12 +64,12 @@ public class ClientsController : ControllerBase
     [HttpDelete("DeleteClient/{id:int}")]
     public async Task<IActionResult> DeleteIndividualAsync(int id)
     {
-        if (await _service.DoesIndividualExistsAsync(id))
+        if (await _clientService.DoesIndividualExistsAsync(id))
         {
             return BadRequest("Person with this ID doesn't exist in the database");
         }
 
-        if (await _service.DeleteIndividualAsync(id) == false)
+        if (await _clientService.DeleteIndividualAsync(id) == false)
         {
             return NotFound("Sth went wrong. Person could not be found");
         }
@@ -80,12 +80,12 @@ public class ClientsController : ControllerBase
     [HttpPut("UpdateIndividual/{id:int}")]
     public async Task<IActionResult> UpdateIndividualAsync([FromBody] UpdateIndividualDto request, int id)
     {
-        if (await _service.DoesIndividualExistsAsync(id))
+        if (await _clientService.DoesIndividualExistsAsync(id))
         {
             return BadRequest("Person with this ID doesn't exist in the database");
         }
 
-        if (await _service.UpdateIndividualAsync(request, id) == false)
+        if (await _clientService.UpdateIndividualAsync(request, id) == false)
         {
             return NotFound("Sth went wrong. Person could not be found");
         }
@@ -96,12 +96,12 @@ public class ClientsController : ControllerBase
     [HttpPut("UpdateCompany/{id:int}")]
     public async Task<IActionResult> UpdateCompanyAsync([FromBody] UpdateCompanyDto request, int id)
     {
-        if (await _service.DoesCompanyExistsAsync(id))
+        if (await _clientService.DoesCompanyExistsAsync(id))
         {
             return BadRequest("Company with this ID doesn't exist in the database");
         }
         
-        if (await _service.UpdateCompanyAsync(request, id) == false)
+        if (await _clientService.UpdateCompanyAsync(request, id) == false)
         {
             return NotFound("Sth went wrong. Company could not be found");
         }

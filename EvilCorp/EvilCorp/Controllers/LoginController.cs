@@ -9,18 +9,18 @@ namespace EvilCorp.Controllers;
 [Route("EvilCorp")]
 public class LoginController : ControllerBase
 {
-    private readonly ILoginService _service;
+    private readonly ILoginService _loginService;
 
-    public LoginController(ILoginService service)
+    public LoginController(ILoginService loginService)
     {
-        _service = service;
+        _loginService = loginService;
     }
     
     [AllowAnonymous]
     [HttpPost("register")]
     public IActionResult RegisterUser(RegisterRequest request)
     {
-        _service.RegisterUser(request);
+        _loginService.RegisterUser(request);
 
         return Ok("User registered");
     }
@@ -30,7 +30,7 @@ public class LoginController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> LoginPatient(LoginRequest request)
     {
-        var token = await _service.LoginUser(request);
+        var token = await _loginService.LoginUser(request);
 
         return Ok(new
         {
@@ -44,7 +44,7 @@ public class LoginController : ControllerBase
     [Authorize(AuthenticationSchemes = "IgnoreTokenExpirationScheme")]
     public async Task<IActionResult> Refresh(RefreshTokenRequest refreshToken)
     {
-        var token = await _service.RefreshToken(refreshToken);
+        var token = await _loginService.RefreshToken(refreshToken);
 
         return Ok(new
         {
@@ -59,6 +59,6 @@ public class LoginController : ControllerBase
     {
         //var claimsFromAccessToken = User.Claims;
 
-        return Ok(_service.GetTestData());
+        return Ok(_loginService.GetTestData());
     }
 }
