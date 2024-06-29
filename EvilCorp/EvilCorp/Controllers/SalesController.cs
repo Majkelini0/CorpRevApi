@@ -4,6 +4,7 @@ using EvilCorp.Models;
 using EvilCorp.Services.ClientService;
 using EvilCorp.Services.DealService;
 using EvilCorp.Services.SoftwareService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EvilCorp.Controllers;
@@ -23,6 +24,7 @@ public class SalesController : ControllerBase
         _softwareService = softwareService;
     }
 
+    [AllowAnonymous]
     [HttpPost("NewSale")]
     public async Task<IActionResult> MakeNewSaleAsync(NewSaleDto request)
     {
@@ -55,6 +57,7 @@ public class SalesController : ControllerBase
         return Ok("Sale created");
     }
     
+    [AllowAnonymous]
     [HttpPost("NewPayment")]
     public async Task<IActionResult> MakeNewPaymentAsync([FromBody] NewPaymentDto request)
     {

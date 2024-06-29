@@ -1,5 +1,6 @@
 ﻿using EvilCorp.DTOs.ClientDTOs;
 using EvilCorp.Services.ClientService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EvilCorp.Controllers;
@@ -15,6 +16,7 @@ public class ClientsController : ControllerBase
         _service = service;
     }
     
+    [AllowAnonymous]
     [HttpPost("NewIndividual")]
     public async Task<IActionResult> AddNewIndividualAsync([FromBody] NewIndividualDto request)
     {
@@ -36,6 +38,7 @@ public class ClientsController : ControllerBase
         return Ok("Individual created");
     }
     
+    [AllowAnonymous]
     [HttpPost("NewCompany")]
     public async Task<IActionResult> AddNewCompanyAsync([FromBody] NewCompanyDto request)
     {
@@ -57,6 +60,7 @@ public class ClientsController : ControllerBase
         return Ok("Company created");
     }
 
+    
     [HttpDelete("DeleteClient/{id:int}")]
     public async Task<IActionResult> DeleteIndividualAsync(int id)
     {

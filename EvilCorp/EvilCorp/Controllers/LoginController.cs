@@ -39,7 +39,7 @@ public class LoginController : ControllerBase
         });
     }
     
-    
+    [AllowAnonymous]
     [HttpPost("refresh")]
     [Authorize(AuthenticationSchemes = "IgnoreTokenExpirationScheme")]
     public async Task<IActionResult> Refresh(RefreshTokenRequest refreshToken)
