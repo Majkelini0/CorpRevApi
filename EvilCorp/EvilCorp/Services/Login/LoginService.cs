@@ -54,7 +54,7 @@ public class LoginService : ILoginService
         {
             throw new UnauthorizedAccessException("Invalid credentials.");
         }
-
+        
         Claim[] userclaim = new[]
         {
             new Claim(ClaimTypes.Name, user.Login),

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EvilCorp.Controllers;
 
 [ApiController]
-[Route("user")]
+[Route("EvilCorp")]
 public class LoginController : ControllerBase
 {
     private readonly ILoginService _service;
@@ -24,6 +24,7 @@ public class LoginController : ControllerBase
 
         return Ok("User registered");
     }
+    
     
     [AllowAnonymous]
     [HttpPost("login")]
@@ -52,9 +53,9 @@ public class LoginController : ControllerBase
         });
     }
 
-    [Authorize]
-    [HttpGet]
-    public IActionResult GetPatients()
+    [AllowAnonymous]
+    [HttpGet("test")]
+    public IActionResult LoginTest()
     {
         //var claimsFromAccessToken = User.Claims;
 

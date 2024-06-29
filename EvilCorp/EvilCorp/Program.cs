@@ -1,6 +1,7 @@
 using System.Text;
 using EvilCorp.Context;
 using EvilCorp.Middlewares;
+using EvilCorp.Services.ClientService;
 using EvilCorp.Services.Login;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -46,6 +47,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IClientService, ClientService>();
 
 
 
