@@ -1,5 +1,6 @@
 ﻿using EvilCorp.Context;
 using EvilCorp.DTOs.DealDTOs;
+using EvilCorp.DTOs.PaymentDTOs;
 using EvilCorp.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -85,12 +86,92 @@ public class SaleService : ISaleService
         return true;
     }
 
-    public async Task<bool> DeleteSaleAsync(int id)
+    public async Task<SingleSale> DeleteSaleAsync(int id)
     {
-        await _context.SingleSale.Where(e => e.IdSale == id).ForEachAsync(e => _context.SingleSale.Remove(e));
-
-        // _context.SingleSale.Where(e => e.IdSale == id).Select(e => _context.SingleSale.Remove(e));
+        var outdatedSale = await _context.SingleSale
+            .Where(e => e.IdSale == id)
+            .FirstOrDefaultAsync();
         
+        await _context.SingleSale.Where(e => e.IdSale == id).ForEachAsync(e => _context.SingleSale.Remove(e));
+        
+        await _context.SaveChangesAsync();
+
+        return outdatedSale;
+    }
+
+    public NewSaleDto PrepareSingleSaleDto(SingleSale outdatedSale)
+    {
+        NewSaleDto newSaleDto = new NewSaleDto()
+        {
+            ExpiresAt = DateTime.Now.AddDays(14),
+            UpdatesInfo = outdatedSale.UpdatesInfo,
+            AdditionalSupportPeriod = outdatedSale.AdditionalSupportPeriod,
+            ClientId = outdatedSale.ClientId,
+            SoftwareId = outdatedSale.SoftwareId
+        };
+
+        return newSaleDto;
+    }
+
+    // // //
+    
+    public async Task<decimal> SumUpAllPaymentsAsync(int id)
+    {
+        return await _context.Payment.Where(e => e.SingleSaleId == id).SumAsync(x => x.Amount);
+    }
+
+    public async Task<bool> MakeNewPaymentTransactionAsync(NewPaymentDto request)
+    {
+        await _context.Payment.AddAsync(new Payment()
+            {
+                Amount = request.Amount,
+                SingleSaleId = request.SingleSaleId
+            }
+        );
+        
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> UpdateIsPaidParamAsync(NewPaymentDto request ,decimal allPaymentsSum)
+    {
+        var sale = await _context.SingleSale
+            .Where(e => e.IdSale == request.SingleSaleId).FirstOrDefaultAsync();
+
+        if (sale == null)
+        {
+            return false;
+        }
+
+        var price = sale.Price;
+
+        if (allPaymentsSum + request.Amount >= price)
+        {
+            sale.IsPaid = "Y";
+            sale.FulfilledAt = DateTime.Now;
+            
+            var client = await _context.Client
+                .Where(e => e.IdClient == sale.ClientId)
+                .FirstOrDefaultAsync();
+
+            if (client == null)
+            {
+                return false;
+            }
+
+            client.PrevClient = "Y";
+        }
+        
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> RollBackPaymentsAsync(int id)
+    {
+        await _context.Payment.Where(e => e.SingleSaleId == id).ForEachAsync(e => _context.Payment.Remove(e));
+
         await _context.SaveChangesAsync();
 
         return true;

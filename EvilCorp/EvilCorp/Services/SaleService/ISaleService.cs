@@ -1,4 +1,5 @@
 ﻿using EvilCorp.DTOs.DealDTOs;
+using EvilCorp.DTOs.PaymentDTOs;
 using EvilCorp.Models;
 
 namespace EvilCorp.Services.DealService;
@@ -17,5 +18,17 @@ public interface ISaleService
     
     public Task<bool> IsSaleStillValidAsync(int id);
     
-    public Task<bool> DeleteSaleAsync(int id);
+    public Task<SingleSale> DeleteSaleAsync(int id);
+
+    public NewSaleDto PrepareSingleSaleDto(SingleSale sale);
+    
+    // // //
+    
+    public Task<decimal> SumUpAllPaymentsAsync(int id);
+    
+    public Task<bool> MakeNewPaymentTransactionAsync(NewPaymentDto request);
+    
+    public Task<bool> UpdateIsPaidParamAsync(NewPaymentDto request, decimal allPaymentsSum);
+    
+    public Task<bool> RollBackPaymentsAsync(int id);
 }

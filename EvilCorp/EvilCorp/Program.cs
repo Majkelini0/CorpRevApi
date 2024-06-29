@@ -4,7 +4,6 @@ using EvilCorp.Middlewares;
 using EvilCorp.Services.ClientService;
 using EvilCorp.Services.DealService;
 using EvilCorp.Services.Login;
-using EvilCorp.Services.PaymentService;
 using EvilCorp.Services.SoftwareService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -53,7 +52,6 @@ builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<ISoftwareService, SoftwareService>();
-builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 
 

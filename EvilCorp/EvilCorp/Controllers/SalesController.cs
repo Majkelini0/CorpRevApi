@@ -1,4 +1,5 @@
 ﻿using EvilCorp.DTOs.DealDTOs;
+using EvilCorp.DTOs.PaymentDTOs;
 using EvilCorp.Models;
 using EvilCorp.Services.ClientService;
 using EvilCorp.Services.DealService;
@@ -23,7 +24,7 @@ public class SalesController : ControllerBase
     }
 
     [HttpPost("NewSale")]
-    public async Task<IActionResult> MakeNewSaleAsync([FromBody] NewSaleDto request)
+    public async Task<IActionResult> MakeNewSaleAsync(NewSaleDto request)
     {
         if (await _clientService.DoesClientExistsAsync(request.ClientId) == false)
         {
@@ -52,5 +53,49 @@ public class SalesController : ControllerBase
         var sale = await _saleService.PrepareNewSale(request, totalPrice);
         
         return Ok("Sale created");
+    }
+    
+    [HttpPost("NewPayment")]
+    public async Task<IActionResult> MakeNewPaymentAsync([FromBody] NewPaymentDto request)
+    {
+        if (await _saleService.DoesSaleExistsAsync(request.SingleSaleId) == false)
+        {
+            return NotFound("Sale with this ID doesn't exist in the database");
+        }
+
+        if (await _saleService.IsSaleAlreadyPaidAsync(request.SingleSaleId))
+        {
+            return BadRequest("Sale with this ID is already paid");
+        }
+
+
+        if (await _saleService.IsSaleStillValidAsync(request.SingleSaleId))
+        {
+            var allPaymentsSum = await _saleService.SumUpAllPaymentsAsync(request.SingleSaleId);
+
+            if (await _saleService.MakeNewPaymentTransactionAsync(request) == false)
+            {
+                return BadRequest("Payment failed");
+            }
+
+            if (await _saleService.UpdateIsPaidParamAsync(request, allPaymentsSum) == false)
+            {
+                return BadRequest("Payment failed");
+            }
+
+            return Ok("Payment created");
+        } // 'else'
+        
+        await _saleService.RollBackPaymentsAsync(request.SingleSaleId);
+
+        SingleSale outdatedSale = await _saleService.DeleteSaleAsync(request.SingleSaleId);
+        
+        // automatic new sale 
+        NewSaleDto newSaleDto = _saleService.PrepareSingleSaleDto(outdatedSale);
+
+        await MakeNewSaleAsync(newSaleDto);
+        
+        return Ok("Payment was cancelled due to exceeding the payment deadline. All payments were rolled back." +
+                  "Sale was deleted. Automatic new sale was created");
     }
 }
