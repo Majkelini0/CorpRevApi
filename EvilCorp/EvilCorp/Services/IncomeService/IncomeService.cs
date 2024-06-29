@@ -37,7 +37,7 @@ public class IncomeService : IIncomeService
     public async Task<decimal> CalculateCurrentCompanyIncomeByYearByProductAsync(int year, string name)
     {
         var sum = await _context.Software
-            .Where(x => x.Name == name)
+            .Where(x => x.Name.ToLower() == name.ToLower())
             .SelectMany(x => x.SingleSales)
             .Where(z => z.FulfilledAt != null && z.FulfilledAt.Value.Year == year)
             .SumAsync(y => y.Price);
@@ -48,13 +48,13 @@ public class IncomeService : IIncomeService
     public async Task<decimal> CalculatePrognosedCompanyIncomeByYearByProductAsync(int year, string name)
     {
         var sum = await _context.Software
-            .Where(x => x.Name == name)
+            .Where(x => x.Name.ToLower() == name.ToLower())
             .SelectMany(x => x.SingleSales)
             .Where(z => z.FulfilledAt != null && z.FulfilledAt.Value.Year == year)
             .SumAsync(y => y.Price);
 
         sum += await _context.Software
-            .Where(x => x.Name == name)
+            .Where(x => x.Name.ToLower() == name.ToLower())
             .SelectMany(x => x.SingleSales)
             .Where(z => z.ExpiresAt.Year == year && z.IsPaid == "N")
             .SumAsync(y => y.Price * 0.667m);

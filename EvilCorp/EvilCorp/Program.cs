@@ -1,5 +1,6 @@
 using System.Text;
 using EvilCorp.Context;
+using EvilCorp.Helpers;
 using EvilCorp.Middlewares;
 using EvilCorp.Services.ClientService;
 using EvilCorp.Services.DealService;
@@ -54,6 +55,7 @@ builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<ISoftwareService, SoftwareService>();
 builder.Services.AddScoped<IIncomeService, IncomeService>();
+builder.Services.AddScoped<ExchangeRateHelper>();
 
 
 

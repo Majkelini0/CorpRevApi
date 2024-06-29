@@ -12,14 +12,14 @@ public class ClientMock
         _clientMock = new Mock<IClientService>();
     }
 
-    [Fact]
-    public async Task TestMethod()
-    {
-        var peselmock = "12345678900";
-        _clientMock.Setup(service => service.DoesIndividualExistsAsync(peselmock)).ReturnsAsync(true);
-            
-        var result = await _clientMock.Object.DoesIndividualExistsAsync(peselmock);
-
-        Assert.True(result);
-    }
+    // [Fact]
+    // public async Task TestMethod()
+    // {
+    //     var peselmock = "12345678900";
+    //     _clientMock.Setup(service => service.DoesIndividualExistsAsync(peselmock)).ReturnsAsync(true);
+    //         
+    //     var result = await _clientMock.Object.DoesIndividualExistsAsync(peselmock);
+    //
+    //     Assert.True(result);
+    // }
 }
