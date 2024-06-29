@@ -6,5 +6,5 @@ public interface ISoftwareService
 {
     public Task<bool> DoesSoftwareExistsAsync(int id);
     
-    public Task<decimal> CalculatePriceAsync(NewDealDto request, bool isPrev);
+    public Task<decimal> CalculatePriceAsync(NewSaleDto request, bool isPrev);
 }

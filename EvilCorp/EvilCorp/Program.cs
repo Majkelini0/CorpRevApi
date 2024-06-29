@@ -50,7 +50,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IClientService, ClientService>();
-builder.Services.AddScoped<IDealService, DealService>();
+builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<ISoftwareService, SoftwareService>();
 
 

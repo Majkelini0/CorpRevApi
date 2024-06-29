@@ -24,7 +24,7 @@ public class SingleSale
     public string UpdatesInfo { get; set; } = null!;
     
     [Required]
-    public int SupportPeriod { get; set; } // Years
+    public int AdditionalSupportPeriod { get; set; } // Years
     
     [MaxLength(1)]
     [Required]

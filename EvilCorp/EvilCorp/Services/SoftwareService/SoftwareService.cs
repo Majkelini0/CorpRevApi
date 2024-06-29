@@ -18,7 +18,7 @@ public class SoftwareService : ISoftwareService
         return await _context.Software.FirstOrDefaultAsync(e => e.IdSoftware == id) != null;
     }
 
-    public async Task<decimal> CalculatePriceAsync(NewDealDto request, bool isPrev)
+    public async Task<decimal> CalculatePriceAsync(NewSaleDto request, bool isPrev)
     {
         var soft = await _context.Software.FirstOrDefaultAsync(e => e.IdSoftware == request.SoftwareId);
         if (soft == null)
@@ -27,15 +27,13 @@ public class SoftwareService : ISoftwareService
         }
         double softPrice = Decimal.ToDouble(soft.Price);
         
-        double additionalCosts = (1000 * request.SupportPeriod) - 1000;
+        double additionalCosts = (1000 * request.AdditionalSupportPeriod);
 
         double prevClientDiscount = 0;
         if (isPrev)
         {
             prevClientDiscount = 0.05;
         }
-        
-        Console.WriteLine("// // // Prev client discount: " + prevClientDiscount);
         
         double maxDiscount = 0;
         maxDiscount = FindMaxDiscount(request.SoftwareId);
@@ -71,8 +69,6 @@ public class SoftwareService : ISoftwareService
             }
         }
         maxDiscount = maxDiscount / 100;
-        
-        Console.WriteLine("// // // Max discount: " + maxDiscount); //////////////////////////////////////////////////
 
         return maxDiscount;
     }

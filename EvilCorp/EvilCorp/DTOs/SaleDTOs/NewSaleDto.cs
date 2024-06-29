@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EvilCorp.DTOs.DealDTOs;
 
-public class NewDealDto
+public class NewSaleDto
 {
     [Required]
     public DateTime ExpiresAt { get; set; } // min + 3 , max + 30 from .Now
@@ -12,7 +12,7 @@ public class NewDealDto
     public string UpdatesInfo { get; set; } = null!;
     
     [Required]
-    public int SupportPeriod { get; set; } // Years
+    public int AdditionalSupportPeriod { get; set; } // Years
     
     public int ClientId { get; set; }
     

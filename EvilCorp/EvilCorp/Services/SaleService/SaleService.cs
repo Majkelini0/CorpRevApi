@@ -4,18 +4,18 @@ using EvilCorp.Models;
 
 namespace EvilCorp.Services.DealService;
 
-public class DealService : IDealService
+public class SaleService : ISaleService
 {
     private readonly EvilCorpContext _context;
     
-    public DealService(EvilCorpContext context)
+    public SaleService(EvilCorpContext context)
     {
         _context = context;
     }
 
     public bool IsSupportPeriodValid(int period)
     {
-        if(period < 1 || period > 4)
+        if(period < 0 || period > 3)
         {
             return false;
         }
@@ -33,7 +33,7 @@ public class DealService : IDealService
         return true;
     }
 
-    public async Task<bool> CreateDealAsync(NewDealDto request, decimal totalPrice)
+    public async Task<SingleSale> NewSaleAsync(NewSaleDto request, decimal totalPrice)
     {
         SingleSale deal = new SingleSale()
         {
@@ -41,7 +41,7 @@ public class DealService : IDealService
             ExpiresAt = request.ExpiresAt,
             Price = totalPrice,
             UpdatesInfo = request.UpdatesInfo,
-            SupportPeriod = request.SupportPeriod,
+            AdditionalSupportPeriod = request.AdditionalSupportPeriod,
             IsPaid = "N",
             ClientId = request.ClientId,
             SoftwareId = request.SoftwareId
@@ -51,6 +51,6 @@ public class DealService : IDealService
         
         await _context.SaveChangesAsync();
 
-        return true;
+        return deal;
     }
 }
