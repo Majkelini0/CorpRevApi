@@ -37,6 +37,45 @@ public partial class EvilCorpContext : DbContext
     {
         OnModelCreatingPartial(modelBuilder);
 
+        modelBuilder.Entity<Discount>().HasData(
+            new Discount()
+            {
+                IdDiscount = 1,
+                Name = "Black March",
+                Info = "March discounts",
+                Value = 3,
+                StartDate = new DateTime(2024, 3, 1),
+                EndDate = new DateTime(2024, 3, 31)
+            },
+            new Discount()
+            {
+                IdDiscount = 2,
+                Name = "June Madness",
+                Info = "June discounts",
+                Value = 2.5m,
+                StartDate = new DateTime(2024, 6, 10),
+                EndDate = new DateTime(2024, 6, 30)
+            },
+            new Discount()
+            {
+                IdDiscount = 3,
+                Name = "June for noobies",
+                Info = "For all new customers",
+                Value = 5,
+                StartDate = new DateTime(2024, 6, 1),
+                EndDate = new DateTime(2024, 6, 30)
+            },
+            new Discount()
+            {
+                IdDiscount = 4,
+                Name = "July Madness",
+                Info = "July discounts",
+                Value = 3.9m,
+                StartDate = new DateTime(2024, 7, 7),
+                EndDate = new DateTime(2024, 7, 22)
+            }
+        );
+
         modelBuilder.Entity<Software>().HasData(
             new Software()
             {
