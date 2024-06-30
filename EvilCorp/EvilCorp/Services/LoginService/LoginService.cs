@@ -54,12 +54,27 @@ public class LoginService : ILoginService
         {
             throw new UnauthorizedAccessException("Invalid credentials.");
         }
-        
+
         Claim[] userclaim = new[]
         {
-            new Claim(ClaimTypes.Name, user.Login),
-            new Claim(ClaimTypes.Role, "admin")
+            new Claim(ClaimTypes.Name, user.Login)
         };
+        
+        if(request.Login == "secretuser" && request.Password == "secretpassword")
+        {
+            userclaim = new[]
+            {
+                new Claim(ClaimTypes.Role, "admin")
+            };
+        }
+        else
+        {
+            userclaim = new[]
+            {
+                new Claim(ClaimTypes.Role, "stduser")
+            };
+        }
+        
 
         SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Key"]));
         SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

@@ -18,9 +18,9 @@ public class LoginController : ControllerBase
     
     [AllowAnonymous]
     [HttpPost("register")]
-    public IActionResult RegisterUser(RegisterRequest request)
+    public async Task<IActionResult> RegisterUser(RegisterRequest request)
     {
-        _loginService.RegisterUser(request);
+        await _loginService.RegisterUser(request);
 
         return Ok("User registered");
     }
@@ -51,14 +51,5 @@ public class LoginController : ControllerBase
             accesToken = token.Item1,
             refreshToken = token.Item2
         });
-    }
-
-    [AllowAnonymous]
-    [HttpGet("test")]
-    public IActionResult LoginTest()
-    {
-        //var claimsFromAccessToken = User.Claims;
-
-        return Ok(_loginService.GetTestData());
     }
 }

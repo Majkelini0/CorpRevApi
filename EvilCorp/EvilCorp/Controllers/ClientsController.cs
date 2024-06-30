@@ -60,7 +60,7 @@ public class ClientsController : ControllerBase
         return Ok("Company created");
     }
 
-    
+    [Authorize(Roles = "admin")]
     [HttpDelete("DeleteClient/{id:int}")]
     public async Task<IActionResult> DeleteIndividualAsync(int id)
     {
@@ -76,7 +76,8 @@ public class ClientsController : ControllerBase
 
         return Ok("Individual deleted");
     }
-
+    
+    [Authorize(Roles = "admin")]
     [HttpPut("UpdateIndividual/{id:int}")]
     public async Task<IActionResult> UpdateIndividualAsync([FromBody] UpdateIndividualDto request, int id)
     {
@@ -93,6 +94,7 @@ public class ClientsController : ControllerBase
         return Ok("Individual updated");
     }
     
+    [Authorize(Roles = "admin")]
     [HttpPut("UpdateCompany/{id:int}")]
     public async Task<IActionResult> UpdateCompanyAsync([FromBody] UpdateCompanyDto request, int id)
     {
