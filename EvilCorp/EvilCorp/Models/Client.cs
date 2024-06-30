@@ -6,6 +6,7 @@ namespace EvilCorp.Models;
 [PrimaryKey(nameof(IdClient))]
 public class Client
 {
+    [Key]
     public int IdClient { get; set; }
 
     [MaxLength(300)]

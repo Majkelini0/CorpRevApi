@@ -6,6 +6,7 @@ namespace EvilCorp.Models;
 [PrimaryKey(nameof(IdSoftware))]
 public class Software
 {
+    [Key]
     public int IdSoftware { get; set; }
     
     [MaxLength(200)]

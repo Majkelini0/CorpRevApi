@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace EvilCorp.Models;
 
 [PrimaryKey(nameof(IdPayment))]
 public class Payment
 {
+    [Key]
     public int IdPayment { get; set; }
     
     [Precision(8,2)]

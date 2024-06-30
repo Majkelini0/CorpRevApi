@@ -6,6 +6,7 @@ namespace EvilCorp.Models;
 [PrimaryKey(nameof(IdSale))]
 public class SingleSale
 {
+    [Key]
     public int IdSale { get; set; }
     
     [Required]

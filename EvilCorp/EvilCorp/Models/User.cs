@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace EvilCorp.Models;
 
 [PrimaryKey(nameof(IdUser))]
 public class User
 {
+    [Key]
     public int IdUser { get; set; }
     
     public string Login { get; set; } = null!;

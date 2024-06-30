@@ -4,6 +4,7 @@ using EvilCorp.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvilCorp.Migrations
 {
     [DbContext(typeof(EvilCorpContext))]
-    partial class EvilCorpContextModelSnapshot : ModelSnapshot
+    [Migration("20240630020152_temp")]
+    partial class temp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,118 +267,6 @@ namespace EvilCorp.Migrations
                     b.HasKey("IdSoftware");
 
                     b.ToTable("Software");
-
-                    b.HasData(
-                        new
-                        {
-                            IdSoftware = 1,
-                            Category = "Digital image processing software",
-                            Name = "Lightroom",
-                            Price = 5899.99m,
-                            SoftInfo = "Image editing software",
-                            VerInfo = "Not the latest version",
-                            Version = "2023.9.9"
-                        },
-                        new
-                        {
-                            IdSoftware = 2,
-                            Category = "Digital image processing software",
-                            Name = "Lightroom",
-                            Price = 5950.00m,
-                            SoftInfo = "Image editing software",
-                            VerInfo = "Not the latest version",
-                            Version = "2024.0.0"
-                        },
-                        new
-                        {
-                            IdSoftware = 3,
-                            Category = "Digital image processing software",
-                            Name = "Lightroom",
-                            Price = 5999.99m,
-                            SoftInfo = "Image editing software",
-                            VerInfo = "Latest version",
-                            Version = "2024.1.0"
-                        },
-                        new
-                        {
-                            IdSoftware = 4,
-                            Category = "Graphic design software",
-                            Name = "Photoshop",
-                            Price = 5599.99m,
-                            SoftInfo = "Graphic design software",
-                            VerInfo = "Not the latest version",
-                            Version = "2023.8.0"
-                        },
-                        new
-                        {
-                            IdSoftware = 5,
-                            Category = "Graphic design software",
-                            Name = "Photoshop",
-                            Price = 5699.99m,
-                            SoftInfo = "Graphic design software",
-                            VerInfo = "Not the latest version",
-                            Version = "2023.9.0"
-                        },
-                        new
-                        {
-                            IdSoftware = 6,
-                            Category = "Graphic design software",
-                            Name = "Photoshop",
-                            Price = 5799.99m,
-                            SoftInfo = "Graphic design software",
-                            VerInfo = "Not the latest version",
-                            Version = "2023.9.9"
-                        },
-                        new
-                        {
-                            IdSoftware = 7,
-                            Category = "Graphic design software",
-                            Name = "Photoshop",
-                            Price = 5899.99m,
-                            SoftInfo = "Graphic design software",
-                            VerInfo = "Not the latest version",
-                            Version = "2024.0.0"
-                        },
-                        new
-                        {
-                            IdSoftware = 8,
-                            Category = "Graphic design software",
-                            Name = "Photoshop",
-                            Price = 6099.99m,
-                            SoftInfo = "Graphic design software",
-                            VerInfo = "Latest version",
-                            Version = "2024.1.1"
-                        },
-                        new
-                        {
-                            IdSoftware = 9,
-                            Category = "Simple Graphic design software",
-                            Name = "Paint 3D PRO",
-                            Price = 99.99m,
-                            SoftInfo = "Graphic design software",
-                            VerInfo = "Latest version",
-                            Version = "2022.7.4"
-                        },
-                        new
-                        {
-                            IdSoftware = 10,
-                            Category = "Graphic design software",
-                            Name = "Illustrator",
-                            Price = 3999.99m,
-                            SoftInfo = "Graphic design software",
-                            VerInfo = "Not the latest version",
-                            Version = "2024.3.9"
-                        },
-                        new
-                        {
-                            IdSoftware = 11,
-                            Category = "Simple Graphic design software",
-                            Name = "Illustrator",
-                            Price = 3999.99m,
-                            SoftInfo = "Graphic design software",
-                            VerInfo = "Latest version",
-                            Version = "2024.4.0"
-                        });
                 });
 
             modelBuilder.Entity("EvilCorp.Models.User", b =>

@@ -6,6 +6,7 @@ namespace EvilCorp.Models;
 [PrimaryKey(nameof(IdDiscount))]
 public class Discount
 {
+    [Key]
     public int IdDiscount { get; set; }
     
     [MaxLength(200)]
