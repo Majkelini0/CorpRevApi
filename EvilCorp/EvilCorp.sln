@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvilCorp", "EvilCorp\EvilCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvilCorpTests", "EvilCorpTests\EvilCorpTests.csproj", "{D2A4E7D5-CC89-426D-BE73-488048D596A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseHttpGets", "DatabaseHttpGets\DatabaseHttpGets.csproj", "{23582336-F0FC-4841-839F-D6E66E67D0F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{D2A4E7D5-CC89-426D-BE73-488048D596A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2A4E7D5-CC89-426D-BE73-488048D596A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2A4E7D5-CC89-426D-BE73-488048D596A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23582336-F0FC-4841-839F-D6E66E67D0F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23582336-F0FC-4841-839F-D6E66E67D0F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23582336-F0FC-4841-839F-D6E66E67D0F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23582336-F0FC-4841-839F-D6E66E67D0F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
