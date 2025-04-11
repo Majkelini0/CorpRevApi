@@ -20,17 +20,18 @@ That’s why accurate and regulation-compliant revenue recognition is crucial fo
 # How to use it
 * clone it
 * restore NuGet packages (if needed)
-  * JetBrains Rider should do it automatically based on /EvilCorp/EvilCorp/EvilCorp.csproj file
+  * JetBrains Rider should do it automatically on first run based on /EvilCorp/EvilCorp/EvilCorp.csproj file
 * edit connection string at /EvilCorp/EvilCorp/appsettings.json
   * I am using mssql image running in docker
   * https://hub.docker.com/r/microsoft/mssql-server
 * run migrations (id needed)
-  * JetBrains Rider should do it automatically
+  * JetBrains Rider should do it automatically on first run
 * start the server
+  * select "EvilCorp: http" .NET Launch Settings Profile
 
 # Technicals
 
-Written in C# | based on .NET 8.0 framework | JWT authentication implemented
+Written in C# | based on .NET 8.0 framework | JWT authentication implemented | Swagger API Documentation Implemented
 
 NuGet Packages needed to run
 * Microsoft.AspNetCore.Authentication.JwtBearer
