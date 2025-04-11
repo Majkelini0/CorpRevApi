@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "EvilCorp REST API" });
     c.AddSecurityDefinition("AuthorizationBearer", new OpenApiSecurityScheme
     {
         Description = @"JWT Authorization header using the Bearer scheme.
